@@ -24,6 +24,7 @@ show_help(){
     echo "Options:"
     echo "  -h, --help          Display this information"
     echo "  -c, --clean         Clean build"
+    echo "  -t, --install_tools Install necessary tools"
     echo "  -s, --sysfsutils    Build sysfsutils"
     echo "  -lh, --libhugetlbfs Build libhugetlbfs"
     echo "  -lm, --libmetal     Build libmetal"
@@ -74,6 +75,12 @@ check_source_dir_is_exist(){
             exit 1
         fi
     fi
+}
+
+# 安装依赖工具
+install_tools(){
+    sudo apt-get update
+    sudo apt-get install -y autoconf automake libtool cmake
 }
 
 # 编译sysfsutils
@@ -142,6 +149,10 @@ while [ "$1" != "" ]; do
             ;;
         -c | --clean ) 
             clean
+            exit 0
+            ;;
+        -t | --install_tools ) 
+            install_tools
             exit 0
             ;;
         -s | --sysfsutils ) 
